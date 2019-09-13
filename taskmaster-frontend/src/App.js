@@ -8,8 +8,6 @@ const API = 'http://taskmaster-dev.kkvv2fpsnq.us-west-2.elasticbeanstalk.com/tas
 // Iterate and display major task points
 // Some Interaction to expose history
 
-// TODO : Add a link to delete or change status
-
 function App() {
 
   const [tasks, setTasks] = useState([]);
@@ -20,23 +18,19 @@ function App() {
       .then( fetchedTasks => setTasks(fetchedTasks) );
   }
 
-  function _deleteTask(id) {
-    fetch()
-     .method()
-     .then()
-  }
-
   useEffect( _getTasks, [] );
 
   return (
     <div className="app">
+      <h2>This is the results of all the task crated and the status</h2>
+      <p> Click on the drop down arrows for more information.</p>
       <ul>
         {tasks.map( (task,idx) => {
           return (
-            <li key={task.id}>
+            <li key={task.id} id="taskList">
               <details>
                 <summary>
-                  <span onClick={_deleteTask}>{task.title}</span>
+                  <span>{task.title}</span>
                 </summary>
                 <History history={task.history} />
               </details>
@@ -50,16 +44,20 @@ function App() {
 
 function History(props) {
   return (
-    <ol>
+    <table>
+      <tr>
+        <th>TimeStamp</th>
+        <th>Action</th>
+      </tr>
       {props.history.map( (record,idx) => {
         return (
-          <li key={idx}>
-            <span>{record.timestamp}</span>
-            <span>{record.action}</span>
-          </li>
+          <tr key={idx} id="task">
+            <td><span id="timeStamp">{record.time}</span></td>
+            <td><span id="action">{record.action}</span></td>
+          </tr>
         )
       })}
-    </ol>
+    </table>
   )
 }
 
